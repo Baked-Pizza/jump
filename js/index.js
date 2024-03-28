@@ -590,9 +590,9 @@ function btnsBack(obj) {
     if (hash[0] == '2' && hash[4] != '100%') {
         progress.innerHTML = '加油!';
     } else if (hash[0] == '2' && hash[4] == '100%') {
-        progress.innerHTML = '棒!';
+        progress.innerHTML = 'good!';
     } else if (hash[0] == '1') {
-        progress.innerHTML = hash[4] + '个';
+        progress.innerHTML = hash[4] + 'ink';
     } else {
         progress.innerHTML = hash[4];
     }
