@@ -751,11 +751,11 @@ function mainFn() {
             pattern.innerHTML = '新手教程';
             point.innerHTML = '';
         } else if (j.pattern) {
-            pattern.innerHTML = '挑战模式';
-            point.innerHTML = '最高纪录：' + max;
+            pattern.innerHTML = 'challengeMode';
+            point.innerHTML = 'highest record：' + max;
         } else {
-            pattern.innerHTML = '闯关模式';
-            point.innerHTML = '第' + j.num + '关';
+            pattern.innerHTML = 'practice mode';
+            point.innerHTML = 'level' + j.num ;
         }
         explain.style.cssText = '';
         //墨水机
@@ -1012,58 +1012,49 @@ function mainFn() {
         //空格启动定时器
         document.onkeydown = function(ev) {
             if (ev.keyCode == 32) {
-                zz_control();
-            }
-        }
+                //判断是不是第一次使用空格
+                if (boss.style.display == 'block') {
+                    menu.style.display = 'none';
+                    if (star) {
+                        star = false;
+                        //墨水机消失定时器
+                        var timer = setInterval(function() {
+                            var l = trigger.offsetLeft;
+                            trigger.style.left = l - 3.1 + 'px';
+                            if (l + trigger.offsetWidth <= 0) {
+                                clearInterval(timer);
+                            }
+                        }, 10);
 
-        function zz_control()
-        {
-            console.log('zz_control');
-            //判断是不是第一次使用空格
-            if (boss.style.display == 'block') {
-                menu.style.display = 'none';
-                if (star) {
-                    star = false;
-                    //墨水机消失定时器
-                    var timer = setInterval(function() {
-                        var l = trigger.offsetLeft;
-                        trigger.style.left = l - 3.1 + 'px';
-                        if (l + trigger.offsetWidth <= 0) {
-                            clearInterval(timer);
+                        //关卡信息消失动画
+                        var timer2 = setInterval(function() {
+                            var l = explain.offsetLeft;
+                            explain.style.left = l - 15 + 'px';
+                            if (l + explain.offsetWidth <= 0) {
+                                clearInterval(timer2);
+                            }
+                        }, 10);
+
+                        jump(boss, j.novice);
+                        blackBall();
+                        if (play == 1) {
+                            bgm.currentTime = 0;
+                            bgm.play();
+                        } else {
+                            nbgm.currentTime = 0;
+                            nbgm.play();
                         }
-                    }, 10);
-
-                    //关卡信息消失动画
-                    var timer2 = setInterval(function() {
-                        var l = explain.offsetLeft;
-                        explain.style.left = l - 15 + 'px';
-                        if (l + explain.offsetWidth <= 0) {
-                            clearInterval(timer2);
-                        }
-                    }, 10);
-
-                    jump(boss, j.novice);
-                    blackBall();
-                    if (play == 1) {
-                        bgm.currentTime = 0;
-                        bgm.play();
                     } else {
-                        nbgm.currentTime = 0;
-                        nbgm.play();
-                    }
-                } else {
-                    if (down) {
-                        onoff = true;
-                        space.style.display = '';
-                        jbgm.play();
+                        if (down) {
+                            onoff = true;
+                            space.style.display = '';
+                            jbgm.play();
+                        }
                     }
                 }
+
             }
         }
-
-        document.body.addEventListener('touchstart', function () {
-            zz_control();
-        });
 
         //碰撞检测
         function duang(obj1, obj2) {
